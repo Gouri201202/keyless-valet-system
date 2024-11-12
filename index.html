@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyless Valet System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Keyless Valet System</h1>
+
+  <!-- Issue Access Token -->
+  <div id="issueToken">
+    <h2>Issue Access Token</h2>
+    <input type="text" id="requesterAddress" placeholder="Requester Address" />
+    <input type="number" id="tokenDuration" placeholder="Duration (in seconds)" />
+    <button onclick="issueAccessToken()">Issue Token</button>
+    <p id="issueResult"></p>
+  </div>
+
+  <!-- Validate Access Token -->
+  <div id="validateToken">
+    <h2>Validate Access Token</h2>
+    <input type="number" id="tokenIdValidate" placeholder="Token ID" />
+    <button onclick="validateAccessToken()">Validate Token</button>
+    <p id="validateResult"></p>
+  </div>
+
+  <!-- Revoke Access Token -->
+  <div id="revokeToken">
+    <h2>Revoke Access Token</h2>
+    <input type="number" id="tokenIdRevoke" placeholder="Token ID" />
+    <button onclick="revokeAccessToken()">Revoke Token</button>
+    <p id="revokeResult"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
