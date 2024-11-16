@@ -4,44 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keyless Valet System</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="content">
-    <h1>Keyless Valet System</h1>
-
-    <!-- Owner and Valet Interface Section -->
-    <div class="interface-section">
-      <button class="interface-button" onclick="window.location.href='owner.html'">Owner Interface</button>
-      <button class="interface-button" onclick="window.location.href='valet.html'">Valet Interface</button>
-    </div>
-
-    <!-- Issue Access Token -->
-    <div id="issueToken" class="token-box">
-      <h2>Issue Access Token</h2>
-      <input type="text" id="requesterAddress" placeholder="Requester Address" />
-      <input type="number" id="tokenDuration" placeholder="Duration (in seconds)" />
-      <button class="action-button" onclick="issueAccessToken()">Issue Token</button>
-      <p id="issueResult"></p>
-    </div>
-
-    <!-- Validate Access Token -->
-    <div id="validateToken" class="token-box">
-      <h2>Validate Access Token</h2>
-      <input type="number" id="tokenIdValidate" placeholder="Token ID" />
-      <button class="action-button" onclick="validateAccessToken()">Validate Token</button>
-      <p id="validateResult"></p>
-    </div>
-
-    <!-- Revoke Access Token -->
-    <div id="revokeToken" class="token-box">
-      <h2>Revoke Access Token</h2>
-      <input type="number" id="tokenIdRevoke" placeholder="Token ID" />
-      <button class="action-button" onclick="revokeAccessToken()">Revoke Token</button>
-      <p id="revokeResult"></p>
+  <div class="center-container">
+    <h1>Welcome to Keyless Valet</h1>
+    <p>Please select an interface to continue:</p>
+    <div>
+      <a href="owner.html" class="btn">Owner Interface</a>
+      <a href="valet.html" class="btn">Valet Interface</a>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
