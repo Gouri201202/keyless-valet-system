@@ -1,65 +1,61 @@
-// Smart contract ABI and address
-const contractABI = [ /* Paste the ABI here */ ];
-const contractAddress = "0xYourContractAddress"; // Replace with your deployed contract address
+document.getElementById("owner-btn").addEventListener("click", () => {
+  document.getElementById("owner-section").classList.remove("hidden");
+  document.getElementById("valet-section").classList.add("hidden");
+});
 
-let web3;
-let valetContract;
+document.getElementById("valet-btn").addEventListener("click", () => {
+  document.getElementById("valet-section").classList.remove("hidden");
+  document.getElementById("owner-section").classList.add("hidden");
+});
 
-// Initialize Web3 and contract
-async function initialize() {
-  if (window.ethereum) {
-    web3 = new Web3(window.ethereum);
-    await window.ethereum.enable();
-    valetContract = new web3.eth.Contract(contractABI, contractAddress);
+let map;
+let selectedLocation;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 12.971598, lng: 77.594566 },
+    zoom: 14,
+  });
+
+  map.addListener("click", (event) => {
+    selectedLocation = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+    new google.maps.Marker({
+      position: selectedLocation,
+      map: map,
+    });
+    console.log("Selected Location:", selectedLocation);
+  });
+}
+
+window.initMap = initMap;
+
+document.getElementById("grant-access-btn").addEventListener("click", () => {
+  const valetAddress = document.getElementById("valet-address").value;
+  const accessTime = document.getElementById("access-time").value;
+
+  if (valetAddress && accessTime && selectedLocation) {
+    console.log("Granting access...");
+    console.log("Valet Address:", valetAddress);
+    console.log("Access Time:", accessTime);
+    console.log("Parking Location:", selectedLocation);
+    // Call backend or blockchain interaction here
   } else {
-    alert("Please install MetaMask to use this feature.");
+    alert("Please fill in all details and select a location.");
   }
-}
+});
 
-// Issue Access Token
-async function issueAccessToken() {
-  const requesterAddress = document.getElementById("requesterAddress").value;
-  const tokenDuration = document.getElementById("tokenDuration").value;
-  const accounts = await web3.eth.getAccounts();
+let carStatus = "Locked";
 
-  valetContract.methods.issueAccessToken(requesterAddress, tokenDuration).send({ from: accounts[0] })
-    .then(receipt => {
-      document.getElementById("issueResult").innerText = `Token Issued: ${receipt.events.TokenIssued.returnValues.tokenId}`;
-    })
-    .catch(error => {
-      console.error(error);
-      document.getElementById("issueResult").innerText = "Error issuing token.";
-    });
-}
+document.getElementById("unlock-btn").addEventListener("click", () => {
+  carStatus = "Unlocked";
+  document.getElementById("car-status").innerText = "Car is Unlocked";
+  console.log("Car Unlocked");
+  // Call blockchain to unlock car
+});
 
-// Validate Access Token
-async function validateAccessToken() {
-  const tokenId = document.getElementById("tokenIdValidate").value;
-
-  valetContract.methods.validateAccessToken(tokenId).call()
-    .then(isValid => {
-      document.getElementById("validateResult").innerText = `Token Valid: ${isValid}`;
-    })
-    .catch(error => {
-      console.error(error);
-      document.getElementById("validateResult").innerText = "Error validating token.";
-    });
-}
-
-// Revoke Access Token
-async function revokeAccessToken() {
-  const tokenId = document.getElementById("tokenIdRevoke").value;
-  const accounts = await web3.eth.getAccounts();
-
-  valetContract.methods.revokeAccessToken(tokenId).send({ from: accounts[0] })
-    .then(receipt => {
-      document.getElementById("revokeResult").innerText = `Token Revoked: ${tokenId}`;
-    })
-    .catch(error => {
-      console.error(error);
-      document.getElementById("revokeResult").innerText = "Error revoking token.";
-    });
-}
-
-// Initialize on load
-window.addEventListener('load', initialize);
+document.getElementById("lock-btn").addEventListener("click", () => {
+  carStatus = "Locked";
+  document.getElementById("car-status").innerText = "Car is Locked";
+  console.log("Car Locked");
+  // Call blockchain to lock car
+});
